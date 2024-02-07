@@ -20,7 +20,7 @@ class Research
     #[ORM\Column(length: 255)]
     private ?string $ip_address = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default" => "CURRENT_TIMESTAMP"])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
     public function getId(): ?int
