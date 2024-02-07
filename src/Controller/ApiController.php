@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Research;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,9 +15,10 @@ class ApiController extends AbstractController
 {
 
     #[Route('/api/adresses', methods:['POST'])]
-    public function searchAddress(Request $request) : JsonResponse
+    public function searchAddress(Request $request, EntityManagerInterface $entityManager) : JsonResponse
     {
         $postData = json_decode($request->getContent(), true);
+        dump($request->getClientIp());
     
         // Vérifier si le champ "adresse" existe dans les données envoyées
         if (!isset($postData["adresse"])) {
@@ -39,6 +42,13 @@ class ApiController extends AbstractController
                 ];
                 $finalResult[] = $tmpArray;
             }
+            // $research = new Research();
+            // $research->setAddress($address);
+            // $research->setIpAddress($request->getClientIp());
+
+            // $entityManager->persist($research);
+
+            // $entityManager->flush();
 
             return new JsonResponse($finalResult);
         } catch (\Exception $e) {
